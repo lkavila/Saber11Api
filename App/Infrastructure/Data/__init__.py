@@ -1,6 +1,7 @@
 import os
-import importlib
+#import importlib
 import threading
+from App.Infrastructure.Data import SB11
 
 
 def get_pkl_name(full_name):
@@ -32,6 +33,6 @@ def run():
     if len(pkl_faltantes) > 0:
         for file in pkl_faltantes:
             print(file)
-            full_module_name = 'App.Infrastructure.Data.SB11'
-            SB11 = importlib.import_module(full_module_name)
+            #full_module_name = 'App.Infrastructure.Data.SB11'
+            #SB11 = importlib.import_module(full_module_name)
             threading.Thread(target=SB11.run, args=(file,), name=file).start()
