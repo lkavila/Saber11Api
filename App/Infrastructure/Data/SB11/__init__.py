@@ -102,23 +102,4 @@ def run(file_name):
     data_pkl = pd.read_pickle("App/Infrastructure/Data/pkl/"+file_name+".pkl")
     print("Tiempo leyendo el archivo pkl: %0.10f seconds." % (time() - start_time))
     print("El archivo " + threading.current_thread().getName() + " se ha convertido a pkl correctamente")
-"""
-    start_time = time()
-    columnas = data_pkl.columns.values
-    puntajes = ["ESTU_DEPTO_RESIDE", "PUNT_LECTURA_CRITICA", "PUNT_MATEMATICAS", "PUNT_C_NATURALES",
-                "PUNT_SOCIALES_CIUDADANAS", "PUNT_INGLES", "PUNT_GLOBAL"]
-    columna_agrupar = 'ESTU_DEPTO_RESIDE'
-    eliminar = []
-    for x in columnas:
-        if x not in puntajes:
-            eliminar.append(x)
-    data_pkl = data_pkl.drop(columns=eliminar)
-    data_pkl = data_pkl.dropna()
-    dept = list(set(data_pkl["ESTU_DEPTO_RESIDE"].values))
-    dept.sort()
 
-    print("Tiempo limpiando archivo: %0.10f seconds." % (time() - start_time))
-    start_time = time()
-    data_pkl2 = data_pkl.groupby(by=columna_agrupar).mean()
-    print("Tiempo agrupando datos: %0.10f seconds." % (time() - start_time))
-"""
