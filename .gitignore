@@ -9,10 +9,13 @@ __pycache__/
 # pyCharm
 .idea/workspace.xml
 
+# aws credentials
+.aws
+
 # Data
-App/Infrastructure/Data/pkl/*
+App/Infrastructure/Data/pickle/*
 App/Infrastructure/Data/xlsm/*
-!App/Infrastructure/Data/pkl/.gitkeep
+!App/Infrastructure/Data/pickle/.gitkeep
 !App/Infrastructure/Data/xlsm/.gitkeep
 
 # Distribution / packaging
