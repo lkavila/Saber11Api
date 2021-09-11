@@ -1,18 +1,14 @@
 from App.Infrastructure.Repository import get_data
+from App.Domain.Analysis.utils import mantener_columnas
 from time import time
 
 
 def obtener_puntajes_por_departamento(dataframe):
     start_time = time()
-    columnas = dataframe.columns.values
     puntajes = ["ESTU_DEPTO_RESIDE", "PUNT_LECTURA_CRITICA", "PUNT_MATEMATICAS", "PUNT_C_NATURALES",
                 "PUNT_SOCIALES_CIUDADANAS", "PUNT_INGLES", "PUNT_GLOBAL"]
     columna_agrupar = 'ESTU_DEPTO_RESIDE'
-    eliminar = []
-    for x in columnas:
-        if x not in puntajes:
-            eliminar.append(x)
-    data_pkl = dataframe.drop(columns=eliminar)
+    data_pkl = mantener_columnas(dataframe, puntajes)
     # dept = list(set(data_pkl["ESTU_DEPTO_RESIDE"].values))
     # dept.sort()
 
