@@ -14,9 +14,9 @@ datasets = []
 archivos_en_bucket = ver_archivos_en_bucket()['Contents']
 
 
-res = input("Desea leer los datasets locales o desde s3? 1: Si, 2: No.   ")
+res = input("Desea leer los datasets locales o desde s3? 1: Leer datos locales, 2: Leer datos desde S3.   ")
 print("su respuesta es: ", res)
-if res == "1":
+if res == "2":
     print("Leyendo datasets de bucket s3")
     start_time = time()
     try:
@@ -51,6 +51,18 @@ else:
     except Exception:
         print('Another Error!!')
 
+
+def get_dataframe_for_year(year):
+    if year == 20191:
+        return dataframe_20191
+    if year == 20192:
+        return dataframe_20192
+    if year == 20201:
+        return dataframe_20201
+    if year == 20202:
+        return  dataframe_20202
+    if year == 20211:
+        return dataframe_20211
 
 
 
