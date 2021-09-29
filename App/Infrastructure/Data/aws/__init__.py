@@ -3,7 +3,6 @@ import pandas as pd
 import os
 
 bucket_name = 'saber11-datasets'
-print(os.getenv("AWS_ACCESS_KEY"))
 s3_client = boto3.client('s3')
 
 
