@@ -2,23 +2,6 @@ from App.Infrastructure.Repository.get_data import get_dataframe_for_year
 from App.Domain.Analysis.utils import mantener_columnas
 
 
-def transformar_estrato(x):
-    if x == 'Estrato 1':
-        return 1
-    if x == 'Estrato 2':
-        return 2
-    if x == 'Estrato 3':
-        return 3
-    if x == 'Estrato 4':
-        return 4
-    if x == 'Estrato 5':
-        return 5
-    if x == 'Estrato 6':
-        return 6
-    else:
-        return 0
-
-
 def mejores_colegios(periodo, departamento, municipio, puntajes, top, num_estudiantes):
 
     dataframe = get_dataframe_for_year(periodo)
@@ -35,8 +18,8 @@ def mejores_colegios(periodo, departamento, municipio, puntajes, top, num_estudi
 
     dataframe['NUM_ESTUDIANTES'] = dataframe.groupby(by='COLE_NOMBRE_ESTABLECIMIENTO')['COLE_DEPTO_UBICACION'].transform(len)
     dataframe = dataframe[dataframe['NUM_ESTUDIANTES'] >= num_estudiantes]
-    dataframe['FAMI_ESTRATOVIVIENDA'] = dataframe['FAMI_ESTRATOVIVIENDA'].apply(transformar_estrato)
     dataframe = dataframe.groupby(['COLE_NOMBRE_ESTABLECIMIENTO', 'COLE_DEPTO_UBICACION','COLE_MCPIO_UBICACION', 'COLE_NATURALEZA','COLE_BILINGUE', 'COLE_CARACTER', 'COLE_AREA_UBICACION',]).mean().reset_index()
+    dataframe = dataframe.dropna()
     df = dataframe.sort_values(by=puntajes, ascending=False).head(top)
 
     pos = 1
@@ -44,16 +27,16 @@ def mejores_colegios(periodo, departamento, municipio, puntajes, top, num_estudi
     for i in df.index:
         colegio = {
                    "nombre": df['COLE_NOMBRE_ESTABLECIMIENTO'][i],
-                   "numero estudiantes": df['NUM_ESTUDIANTES'][i],
-                   "posición": pos,
+                   "numeroEstudiantes": df['NUM_ESTUDIANTES'][i],
+                   "posicion": pos,
                    "departamento": df['COLE_DEPTO_UBICACION'][i],
                    "municipio": df['COLE_MCPIO_UBICACION'][i],
                    "bilingue": df['COLE_BILINGUE'][i],
                    "naturaleza": df['COLE_NATURALEZA'][i],
-                   "cáracter": df['COLE_CARACTER'][i],
+                   "caracter": df['COLE_CARACTER'][i],
                    "area": df['COLE_AREA_UBICACION'][i],
-                   "promedio estrato familia estudiante": df['FAMI_ESTRATOVIVIENDA'][i],
-                   "puntaje promedio": df['PUNT_GLOBAL'][i]
+                   "promedioEstratoFamiliaEstudiante": df['FAMI_ESTRATOVIVIENDA'][i],
+                   "puntajepromedio": df['PUNT_GLOBAL'][i]
                    }
         respuesta.append(colegio)
         pos = pos + 1
