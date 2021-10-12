@@ -64,23 +64,24 @@ else:
 def get_dataframe_for_year(year):
     if year == 20171:
         return dataframe_20171
-    if year == 20172:
+    elif year == 20172:
         return dataframe_20172
-    if year == 20181:
+    elif year == 20181:
         return dataframe_20181
-    if year == 20182:
+    elif year == 20182:
         return dataframe_20182
-    if year == 20191:
+    elif year == 20191:
         return dataframe_20191
-    if year == 20192:
+    elif year == 20192:
         return dataframe_20192
-    if year == 20201:
+    elif year == 20201:
         return dataframe_20201
-    if year == 20202:
+    elif year == 20202:
         return  dataframe_20202
-    if year == 20211:
+    elif year == 20211:
         return dataframe_20211
-
+    else:
+        return None
 
 
 
