@@ -31,6 +31,10 @@ if res == "2":
     except Exception:
         print('Another Error!!')
 
+    dataframe_20171 = get_dataframe("SB11_20171.pkl")
+    dataframe_20172 = get_dataframe("SB11_20172.pkl")
+    dataframe_20181 = get_dataframe("SB11_20181.pkl")
+    dataframe_20182 = get_dataframe("SB11_20182.pkl")
     dataframe_20191 = get_dataframe("SB11_20191.pkl")
     dataframe_20192 = get_dataframe("SB11_20192.pkl")
     dataframe_20201 = get_dataframe("SB11_20201.pkl")
@@ -40,6 +44,10 @@ if res == "2":
 else:
     try:
         path_data = 'App/Infrastructure/Data/pickle/'
+        dataframe_20171 = pd.read_pickle(path_data + "SB11_20171.pkl")
+        dataframe_20172 = pd.read_pickle(path_data + "SB11_20172.pkl")
+        dataframe_20181 = pd.read_pickle(path_data + "SB11_20181.pkl")
+        dataframe_20182 = pd.read_pickle(path_data + "SB11_20182.pkl")
         dataframe_20191 = pd.read_pickle(path_data + "SB11_20191.pkl")
         dataframe_20192 = pd.read_pickle(path_data + "SB11_20192.pkl")
         dataframe_20201 = pd.read_pickle(path_data + "SB11_20201.pkl")
@@ -54,6 +62,14 @@ else:
 
 
 def get_dataframe_for_year(year):
+    if year == 20171:
+        return dataframe_20171
+    if year == 20172:
+        return dataframe_20172
+    if year == 20181:
+        return dataframe_20181
+    if year == 20182:
+        return dataframe_20182
     if year == 20191:
         return dataframe_20191
     if year == 20192:
