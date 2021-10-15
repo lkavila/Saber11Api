@@ -1,5 +1,6 @@
 from App.Infrastructure.Repository.get_data import get_dataframe_for_year
 from App.Domain.Analysis.utils import mantener_columnas
+import numpy
 
 
 def diagrama_caja(periodo, variable, puntaje):
@@ -14,9 +15,10 @@ def diagrama_caja(periodo, variable, puntaje):
 
     if variable in variables_socieconomicas:
         if puntaje in puntajes:
-
             dataframe = get_dataframe_for_year(periodo)
             dataframe = mantener_columnas(dataframe, [variable, puntaje])
+            drop_indices = numpy.random.choice(dataframe.index, abs(dataframe.shape[0]-9000), replace=False)
+            dataframe = dataframe.drop(drop_indices)
             dataframe = dataframe.astype('object')
             categorias = dataframe[variable].value_counts()
             categorias = list(categorias.index)
