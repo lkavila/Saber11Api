@@ -6,12 +6,23 @@ def buscar_colegio(periodo):
     dataframe= get_dataframe_for_year(periodo)
     columnas_mantener = ['COLE_NOMBRE_ESTABLECIMIENTO']
     dataframe = mantener_columnas(dataframe, columnas_mantener)
-    return dataframe.groupby(by='COLE_NOMBRE_ESTABLECIMIENTO').to_dict()
-
+    dataframe = dataframe.groupby('COLE_NOMBRE_ESTABLECIMIENTO')
+    return dataframe.apply(list).to_dict()
 
 def buscar_colegio_departamento(periodo,departamento):
-    return 1
+    dataframe = get_dataframe_for_year(periodo)
+    columnas_mantener = ['COLE_NOMBRE_ESTABLECIMIENTO','COLE_DEPTO_UBICACION']
+    dataframe = mantener_columnas(dataframe, columnas_mantener)
+    dataframe = dataframe[dataframe['COLE_DEPTO_UBICACION']== departamento.upper()]
+    dataframe = dataframe.groupby(['COLE_NOMBRE_ESTABLECIMIENTO'])
+    return dataframe.apply(list).to_dict()
 
 
 def buscar_colegio_municipio(periodo,departamento,municipio):
-    return 1
+    dataframe = get_dataframe_for_year(periodo)
+    columnas_mantener = ['COLE_NOMBRE_ESTABLECIMIENTO', 'COLE_DEPTO_UBICACION', 'COLE_MCPIO_UBICACION']
+    dataframe = mantener_columnas(dataframe, columnas_mantener)
+    dataframe = dataframe[dataframe['COLE_DEPTO_UBICACION'] == departamento.upper()]
+    dataframe = dataframe[dataframe['COLE_MCPIO_UBICACION'] == municipio.upper()]
+    dataframe = dataframe.groupby(['COLE_NOMBRE_ESTABLECIMIENTO'])
+    return dataframe.apply(list).to_dict()
