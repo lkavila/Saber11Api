@@ -27,3 +27,21 @@ def desviacion_var_socioeconomico():
     data = request.args
     result=desviacion_economica(int(data.get('periodo','')),data.get('tpuntuacion'),data.get('variablesocio'))
     return make_response(jsonify(result), 200)
+#-------------------------------------------------------------------------------------------------
+@graficasLineas.route('/graficas/linea-promedios-colegios')
+def promediosColegios():
+    data = request.args
+    result = promedio_gen(int(data.get('periodo','')),data.get('tpuntuacion'))
+    return make_response(jsonify(result), 200)
+
+@graficasLineas.route('/graficas/linea-promedios-departamento')
+def promediosDepartamentos():
+    data = request.args
+    result = promedio_gen(int(data.get('periodo','')),data.get('tpuntuacion'))
+    return make_response(jsonify(result), 200)
+
+@graficasLineas.route('/graficas/linea-promedio-municipios')
+def promediosMunicipio():
+    data = request.args
+    result = promedio_gen(int(data.get('periodo','')),data.get('tpuntuacion'))
+    return make_response(jsonify(result), 200)
