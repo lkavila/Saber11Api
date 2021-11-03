@@ -5,3 +5,8 @@ Si pide contraseña: Icfes2020*
 
 En ese repositorio se pueden encontrar los resultados de las pruebas saber 11 de los ultimos años,
 estos datos se deben pasar a xlsm y mandarlos a la carpeta App/Infrastructure/Data/xlsm del proyecto 
+comandos 
+pip install awscli
+aws configure
+pip install -r requirements.txt
+python -m venv env
