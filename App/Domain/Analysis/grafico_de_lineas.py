@@ -213,3 +213,45 @@ def desviacion_economica(calendario,tipoPuntaje,variableEconomica):
         result.append(desviaciones_generales(calendario, tipoPuntaje))
     return result
 
+def promediocolegio(calendario,departamento,municipio,colegio,tipoPuntaje):
+    mantener_colum=['COLE_DEPTO_UBICACION', 'COLE_MCPIO_UBICACION','COLE_NOMBRE_ESTABLECIMIENTO',tipoPuntaje]
+    if (calendario == 1):
+        dataframe1 = get_dataframe_for_year(20171)
+        dataframe2 = get_dataframe_for_year(20181)
+        dataframe3 = get_dataframe_for_year(20191)
+        dataframe4 = get_dataframe_for_year(20201)
+        x = ['20171', '20181', '20191', '20201']
+        dataframe1 = mantener_columnas(dataframe1, mantener_colum)
+        dataframe2 = mantener_columnas(dataframe2, mantener_colum)
+        dataframe3 = mantener_columnas(dataframe3, mantener_colum)
+        dataframe4 = mantener_columnas(dataframe4, mantener_colum)
+        dataframe1 = dataframe1.orderby().std().to_dict()
+        dataframe2 = dataframe2.std().to_dict()
+        dataframe3 = dataframe3.std().to_dict()
+        dataframe4 = dataframe4.std().to_dict()
+        result = []
+        result.append({'ejex': x})
+        result.append({'ejey': [dataframe1[tipoPuntaje], dataframe2[tipoPuntaje], dataframe3[tipoPuntaje],
+                                dataframe4[tipoPuntaje]]})
+
+    if (calendario == 2):
+        dataframe1 = get_dataframe_for_year(20172)
+        dataframe2 = get_dataframe_for_year(20182)
+        dataframe3 = get_dataframe_for_year(20192)
+        dataframe4 = get_dataframe_for_year(20202)
+        x = ['20172', '20182', '20192', '20202']
+        dataframe1 = mantener_columnas(dataframe1, tipoPuntaje)
+        dataframe2 = mantener_columnas(dataframe2, tipoPuntaje)
+        dataframe3 = mantener_columnas(dataframe3, tipoPuntaje)
+        dataframe4 = mantener_columnas(dataframe4, tipoPuntaje)
+        dataframe1 = dataframe1.std().to_dict()
+        dataframe2 = dataframe2.std().to_dict()
+        dataframe3 = dataframe3.std().to_dict()
+        dataframe4 = dataframe4.std().to_dict()
+        result = []
+        result.append({'ejex': x})
+        result.append({'ejey': [dataframe1[tipoPuntaje], dataframe2[tipoPuntaje], dataframe3[tipoPuntaje],
+                                dataframe4[tipoPuntaje]]})
+
+def promenteterritorial():
+    return 1
