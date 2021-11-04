@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response
 
-from App.Domain.Analysis.grafico_de_lineas import promedio_gen, variable_economica, desviacion_economica
+from App.Domain.Analysis.grafico_de_lineas import promedio_gen, variable_economica, desviacion_economica, \
+    promediocolegio, promedioDepto
 
 graficasLineas = Blueprint('graficas_lineas', __name__)
 
@@ -31,13 +32,19 @@ def desviacion_var_socioeconomico():
 @graficasLineas.route('/graficas/linea-promedios-colegios')
 def promediosColegios():
     data = request.args
-    result = promedio_gen(int(data.get('periodo','')),data.get('tpuntuacion'))
+    result = promediocolegio(int(data.get('periodo',''))
+                             ,data.get('departamento')
+                             ,data.get('municipio')
+                             ,data.get('colegio')
+                             ,data.get('tpuntuacion'))
     return make_response(jsonify(result), 200)
 
 @graficasLineas.route('/graficas/linea-promedios-departamento')
 def promediosDepartamentos():
     data = request.args
-    result = promedio_gen(int(data.get('periodo','')),data.get('tpuntuacion'))
+    result = promedioDepto(int(data.get('periodo',''))
+                             ,data.get('departamento')
+                             ,data.get('tpuntuacion'))
     return make_response(jsonify(result), 200)
 
 @graficasLineas.route('/graficas/linea-promedio-municipios')

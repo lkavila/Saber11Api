@@ -214,44 +214,149 @@ def desviacion_economica(calendario,tipoPuntaje,variableEconomica):
     return result
 
 def promediocolegio(calendario,departamento,municipio,colegio,tipoPuntaje):
-    mantener_colum=['COLE_DEPTO_UBICACION', 'COLE_MCPIO_UBICACION','COLE_NOMBRE_ESTABLECIMIENTO',tipoPuntaje]
+    mantener_colum=['COLE_DEPTO_UBICACION', 'COLE_MCPIO_UBICACION','COLE_NOMBRE_ESTABLECIMIENTO']
+    mantener_colum.append(tipoPuntaje)
+    result= []
     if (calendario == 1):
         dataframe1 = get_dataframe_for_year(20171)
         dataframe2 = get_dataframe_for_year(20181)
         dataframe3 = get_dataframe_for_year(20191)
         dataframe4 = get_dataframe_for_year(20201)
         x = ['20171', '20181', '20191', '20201']
-        dataframe1 = mantener_columnas(dataframe1, mantener_colum)
-        dataframe2 = mantener_columnas(dataframe2, mantener_colum)
-        dataframe3 = mantener_columnas(dataframe3, mantener_colum)
-        dataframe4 = mantener_columnas(dataframe4, mantener_colum)
-        dataframe1 = dataframe1.orderby().std().to_dict()
-        dataframe2 = dataframe2.std().to_dict()
-        dataframe3 = dataframe3.std().to_dict()
-        dataframe4 = dataframe4.std().to_dict()
-        result = []
-        result.append({'ejex': x})
-        result.append({'ejey': [dataframe1[tipoPuntaje], dataframe2[tipoPuntaje], dataframe3[tipoPuntaje],
-                                dataframe4[tipoPuntaje]]})
-
     if (calendario == 2):
         dataframe1 = get_dataframe_for_year(20172)
         dataframe2 = get_dataframe_for_year(20182)
         dataframe3 = get_dataframe_for_year(20192)
         dataframe4 = get_dataframe_for_year(20202)
         x = ['20172', '20182', '20192', '20202']
-        dataframe1 = mantener_columnas(dataframe1, tipoPuntaje)
-        dataframe2 = mantener_columnas(dataframe2, tipoPuntaje)
-        dataframe3 = mantener_columnas(dataframe3, tipoPuntaje)
-        dataframe4 = mantener_columnas(dataframe4, tipoPuntaje)
-        dataframe1 = dataframe1.std().to_dict()
-        dataframe2 = dataframe2.std().to_dict()
-        dataframe3 = dataframe3.std().to_dict()
-        dataframe4 = dataframe4.std().to_dict()
-        result = []
-        result.append({'ejex': x})
-        result.append({'ejey': [dataframe1[tipoPuntaje], dataframe2[tipoPuntaje], dataframe3[tipoPuntaje],
-                                dataframe4[tipoPuntaje]]})
 
-def promenteterritorial():
-    return 1
+    dataframe1 = mantener_columnas(dataframe1, mantener_colum)
+    dataframe2 = mantener_columnas(dataframe2, mantener_colum)
+    dataframe3 = mantener_columnas(dataframe3, mantener_colum)
+    dataframe4 = mantener_columnas(dataframe4, mantener_colum)
+    dataframe1 = dataframe1[dataframe1['COLE_DEPTO_UBICACION'] == departamento.upper()]
+    dataframe1 = dataframe1[dataframe1['COLE_MCPIO_UBICACION'] == municipio.upper()]
+    dataframe1 = dataframe1[dataframe1['COLE_NOMBRE_ESTABLECIMIENTO'] == colegio.upper()]
+    dataframe2 = dataframe2[dataframe2['COLE_DEPTO_UBICACION'] == departamento.upper()]
+    dataframe2 = dataframe2[dataframe2['COLE_MCPIO_UBICACION'] == municipio.upper()]
+    dataframe2 = dataframe2[dataframe2['COLE_NOMBRE_ESTABLECIMIENTO'] == colegio.upper()]
+    dataframe3 = dataframe3[dataframe3['COLE_DEPTO_UBICACION'] == departamento.upper()]
+    dataframe3 = dataframe3[dataframe3['COLE_MCPIO_UBICACION'] == municipio.upper()]
+    dataframe3 = dataframe3[dataframe3['COLE_NOMBRE_ESTABLECIMIENTO'] == colegio.upper()]
+    dataframe4 = dataframe4[dataframe4['COLE_DEPTO_UBICACION'] == departamento.upper()]
+    dataframe4 = dataframe4[dataframe4['COLE_MCPIO_UBICACION'] == municipio.upper()]
+    dataframe4 = dataframe4[dataframe4['COLE_NOMBRE_ESTABLECIMIENTO'] == colegio.upper()]
+    result.append({'ejex': x})
+    result.append({'ejeypromedio': [dataframe1.mean()[tipoPuntaje], dataframe2.mean()[tipoPuntaje], dataframe3.mean()[tipoPuntaje],
+                             dataframe4.mean()[tipoPuntaje]]})
+    result.append(
+        {'ejeydesviacion': [dataframe1.std()[tipoPuntaje], dataframe2.std()[tipoPuntaje], dataframe3.std()[tipoPuntaje],
+                   dataframe4.std()[tipoPuntaje]]})
+    result.append(
+        {'ejeymejorpuntaje': [dataframe1.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict(),
+                            dataframe2.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict(),
+                            dataframe3.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict(),
+                            dataframe4.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict()
+                            ]})
+    result.append(
+        {'ejeypeorpuntaje': [dataframe1.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict(),
+                        dataframe2.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict(),
+                        dataframe3.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict(),
+                        dataframe4.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict()
+                        ]})
+    return result
+
+def promedioDepto(calendario,departamento,tipoPuntaje):
+    mantener_colum = ['COLE_DEPTO_UBICACION',]
+    mantener_colum.append(tipoPuntaje)
+    result = []
+    if (calendario == 1):
+        dataframe1 = get_dataframe_for_year(20171)
+        dataframe2 = get_dataframe_for_year(20181)
+        dataframe3 = get_dataframe_for_year(20191)
+        dataframe4 = get_dataframe_for_year(20201)
+        x = ['20171', '20181', '20191', '20201']
+    if (calendario == 2):
+        dataframe1 = get_dataframe_for_year(20172)
+        dataframe2 = get_dataframe_for_year(20182)
+        dataframe3 = get_dataframe_for_year(20192)
+        dataframe4 = get_dataframe_for_year(20202)
+        x = ['20172', '20182', '20192', '20202']
+
+    dataframe1 = mantener_columnas(dataframe1, mantener_colum)
+    dataframe2 = mantener_columnas(dataframe2, mantener_colum)
+    dataframe3 = mantener_columnas(dataframe3, mantener_colum)
+    dataframe4 = mantener_columnas(dataframe4, mantener_colum)
+
+    dataframe1 = dataframe1[dataframe1['COLE_DEPTO_UBICACION'] == departamento.upper()]
+    dataframe2 = dataframe2[dataframe2['COLE_DEPTO_UBICACION'] == departamento.upper()]
+    dataframe3 = dataframe3[dataframe3['COLE_DEPTO_UBICACION'] == departamento.upper()]
+    dataframe4 = dataframe4[dataframe4['COLE_DEPTO_UBICACION'] == departamento.upper()]
+    result.append({'ejex': x})
+    result.append({'ejeypromedio': [dataframe1.mean()[tipoPuntaje], dataframe2.mean()[tipoPuntaje],
+                                    dataframe3.mean()[tipoPuntaje],
+                                    dataframe4.mean()[tipoPuntaje]]})
+    result.append(
+        {'ejeydesviacion': [dataframe1.std()[tipoPuntaje], dataframe2.std()[tipoPuntaje], dataframe3.std()[tipoPuntaje],
+                            dataframe4.std()[tipoPuntaje]]})
+    result.append(
+        {'ejeymejorpuntaje': [dataframe1.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict(),
+                              dataframe2.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict(),
+                              dataframe3.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict(),
+                              dataframe4.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict()
+                              ]})
+    result.append(
+        {'ejeypeorpuntaje': [dataframe1.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict(),
+                             dataframe2.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict(),
+                             dataframe3.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict(),
+                             dataframe4.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict()
+                             ]})
+    return result
+def promediomunicipio(calendario,departamento,municipio,tipoPuntaje):
+    mantener_colum=['COLE_DEPTO_UBICACION', 'COLE_MCPIO_UBICACION']
+    mantener_colum.append(tipoPuntaje)
+    result= []
+    if (calendario == 1):
+        dataframe1 = get_dataframe_for_year(20171)
+        dataframe2 = get_dataframe_for_year(20181)
+        dataframe3 = get_dataframe_for_year(20191)
+        dataframe4 = get_dataframe_for_year(20201)
+        x = ['20171', '20181', '20191', '20201']
+    if (calendario == 2):
+        dataframe1 = get_dataframe_for_year(20172)
+        dataframe2 = get_dataframe_for_year(20182)
+        dataframe3 = get_dataframe_for_year(20192)
+        dataframe4 = get_dataframe_for_year(20202)
+        x = ['20172', '20182', '20192', '20202']
+
+    dataframe1 = mantener_columnas(dataframe1, mantener_colum)
+    dataframe2 = mantener_columnas(dataframe2, mantener_colum)
+    dataframe3 = mantener_columnas(dataframe3, mantener_colum)
+    dataframe4 = mantener_columnas(dataframe4, mantener_colum)
+    dataframe1 = dataframe1[dataframe1['COLE_DEPTO_UBICACION'] == departamento.upper()]
+    dataframe1 = dataframe1[dataframe1['COLE_MCPIO_UBICACION'] == municipio.upper()]
+    dataframe2 = dataframe2[dataframe2['COLE_DEPTO_UBICACION'] == departamento.upper()]
+    dataframe2 = dataframe2[dataframe2['COLE_MCPIO_UBICACION'] == municipio.upper()]
+    dataframe3 = dataframe3[dataframe3['COLE_DEPTO_UBICACION'] == departamento.upper()]
+    dataframe3 = dataframe3[dataframe3['COLE_MCPIO_UBICACION'] == municipio.upper()]
+    dataframe4 = dataframe4[dataframe4['COLE_DEPTO_UBICACION'] == departamento.upper()]
+    dataframe4 = dataframe4[dataframe4['COLE_MCPIO_UBICACION'] == municipio.upper()]
+    result.append({'ejex': x})
+    result.append({'ejeypromedio': [dataframe1.mean()[tipoPuntaje], dataframe2.mean()[tipoPuntaje], dataframe3.mean()[tipoPuntaje],
+                             dataframe4.mean()[tipoPuntaje]]})
+    result.append(
+        {'ejeydesviacion': [dataframe1.std()[tipoPuntaje], dataframe2.std()[tipoPuntaje], dataframe3.std()[tipoPuntaje],
+                   dataframe4.std()[tipoPuntaje]]})
+    result.append(
+        {'ejeymejorpuntaje': [dataframe1.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict(),
+                            dataframe2.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict(),
+                            dataframe3.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict(),
+                            dataframe4.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict()
+                            ]})
+    result.append(
+        {'ejeypeorpuntaje': [dataframe1.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict(),
+                        dataframe2.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict(),
+                        dataframe3.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict(),
+                        dataframe4.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict()
+                        ]})
+    return result
