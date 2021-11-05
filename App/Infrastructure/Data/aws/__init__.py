@@ -1,5 +1,6 @@
 import boto3
 import pandas as pd
+import os
 
 bucket_name = 'saber11-datasets'
 s3_client = boto3.client('s3')
