@@ -253,17 +253,18 @@ def promediocolegio(calendario,departamento,municipio,colegio,tipoPuntaje):
         {'ejeydesviacion': [dataframe1.std()[tipoPuntaje], dataframe2.std()[tipoPuntaje], dataframe3.std()[tipoPuntaje],
                    dataframe4.std()[tipoPuntaje]]})
     result.append(
-        {'ejeymejorpuntaje': [dataframe1.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict(),
-                            dataframe2.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict(),
-                            dataframe3.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict(),
-                            dataframe4.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict()
-                            ]})
+        {'ejeymejorpuntaje': mejores(dataframe1.sort_values(by=tipoPuntaje, ascending=False).head(1),
+                                     dataframe2.sort_values(by=tipoPuntaje, ascending=False).head(1),
+                                     dataframe3.sort_values(by=tipoPuntaje, ascending=False).head(1),
+                                     dataframe4.sort_values(by=tipoPuntaje, ascending=False).head(1),
+                                     tipoPuntaje
+                                     )})
     result.append(
-        {'ejeypeorpuntaje': [dataframe1.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict(),
-                        dataframe2.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict(),
-                        dataframe3.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict(),
-                        dataframe4.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict()
-                        ]})
+        {'ejeypeorpuntaje': peores(dataframe1.sort_values(by=tipoPuntaje, ascending=True).head(1),
+                                   dataframe2.sort_values(by=tipoPuntaje, ascending=True).head(1),
+                                   dataframe3.sort_values(by=tipoPuntaje, ascending=True).head(1),
+                                   dataframe4.sort_values(by=tipoPuntaje, ascending=True).head(1),
+                                   tipoPuntaje)})
     return result
 
 def promedioDepto(calendario,departamento,tipoPuntaje):
@@ -300,17 +301,18 @@ def promedioDepto(calendario,departamento,tipoPuntaje):
         {'ejeydesviacion': [dataframe1.std()[tipoPuntaje], dataframe2.std()[tipoPuntaje], dataframe3.std()[tipoPuntaje],
                             dataframe4.std()[tipoPuntaje]]})
     result.append(
-        {'ejeymejorpuntaje': [dataframe1.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict(),
-                              dataframe2.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict(),
-                              dataframe3.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict(),
-                              dataframe4.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict()
-                              ]})
+        {'ejeymejorpuntaje': mejores(dataframe1.sort_values(by=tipoPuntaje, ascending=False).head(1),
+                                     dataframe2.sort_values(by=tipoPuntaje, ascending=False).head(1),
+                                     dataframe3.sort_values(by=tipoPuntaje, ascending=False).head(1),
+                                     dataframe4.sort_values(by=tipoPuntaje, ascending=False).head(1),
+                                     tipoPuntaje
+                                     )})
     result.append(
-        {'ejeypeorpuntaje': [dataframe1.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict(),
-                             dataframe2.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict(),
-                             dataframe3.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict(),
-                             dataframe4.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict()
-                             ]})
+        {'ejeypeorpuntaje': peores(dataframe1.sort_values(by=tipoPuntaje, ascending=True).head(1),
+                                   dataframe2.sort_values(by=tipoPuntaje, ascending=True).head(1),
+                                   dataframe3.sort_values(by=tipoPuntaje, ascending=True).head(1),
+                                   dataframe4.sort_values(by=tipoPuntaje, ascending=True).head(1),
+                                   tipoPuntaje)})
     return result
 def promediomunicipio(calendario,departamento,municipio,tipoPuntaje):
     mantener_colum=['COLE_DEPTO_UBICACION', 'COLE_MCPIO_UBICACION']
@@ -347,16 +349,37 @@ def promediomunicipio(calendario,departamento,municipio,tipoPuntaje):
     result.append(
         {'ejeydesviacion': [dataframe1.std()[tipoPuntaje], dataframe2.std()[tipoPuntaje], dataframe3.std()[tipoPuntaje],
                    dataframe4.std()[tipoPuntaje]]})
+
     result.append(
-        {'ejeymejorpuntaje': [dataframe1.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict(),
-                            dataframe2.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict(),
-                            dataframe3.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict(),
-                            dataframe4.sort_values(by=tipoPuntaje, ascending=False).head(1)[tipoPuntaje].to_dict()
-                            ]})
+        {'ejeymejorpuntaje':mejores(dataframe1.sort_values(by=tipoPuntaje, ascending=False).head(1),
+                                    dataframe2.sort_values(by=tipoPuntaje, ascending=False).head(1),
+                                    dataframe3.sort_values(by=tipoPuntaje, ascending=False).head(1),
+                                    dataframe4.sort_values(by=tipoPuntaje, ascending=False).head(1),
+                                    tipoPuntaje
+  ) })
     result.append(
-        {'ejeypeorpuntaje': [dataframe1.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict(),
-                        dataframe2.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict(),
-                        dataframe3.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict(),
-                        dataframe4.sort_values(by=tipoPuntaje, ascending=True).head(1)[tipoPuntaje].to_dict()
-                        ]})
+        {'ejeypeorpuntaje': peores(dataframe1.sort_values(by=tipoPuntaje, ascending=True).head(1),
+                                   dataframe2.sort_values(by=tipoPuntaje, ascending=True).head(1),
+                                   dataframe3.sort_values(by=tipoPuntaje, ascending=True).head(1),
+                                   dataframe4.sort_values(by=tipoPuntaje, ascending=True).head(1),
+                                   tipoPuntaje)})
     return result
+
+
+def mejores (df1,df2,df3,df4,tipoPuntaje):
+    mejores=[]
+    for d1,d2,d3,d4 in zip(df1[tipoPuntaje],df2[tipoPuntaje],df3[tipoPuntaje],df4[tipoPuntaje]):
+        mejores.append(d1)
+        mejores.append(d2)
+        mejores.append(d3)
+        mejores.append(d4)
+    return mejores
+
+def peores(df1,df2,df3,df4,tipoPuntaje):
+    peores=[]
+    for d1,d2,d3,d4 in zip(df1[tipoPuntaje],df2[tipoPuntaje],df3[tipoPuntaje],df4[tipoPuntaje]):
+        peores.append(d1)
+        peores.append(d2)
+        peores.append(d3)
+        peores.append(d4)
+    return peores
