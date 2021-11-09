@@ -14,8 +14,8 @@ datasets = []
 archivos_en_bucket = ver_archivos_SB11_en_bucket()['Contents']
 
 
-#res = input("Desea leer los datasets locales o desde s3? 1: Leer datos locales, 2: Leer datos desde S3.   ")
-res = "1"
+res = input("Desea leer los datasets locales o desde s3? 1: Leer datos locales, 2: Leer datos desde S3.   ")
+#res = "1"
 print("su respuesta es: ", res)
 if res == "2":
     print("Leyendo datasets de bucket s3")
