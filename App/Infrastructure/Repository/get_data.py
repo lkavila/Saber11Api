@@ -1,4 +1,4 @@
-from App.Infrastructure.Data.aws import ver_archivos_SB11_en_bucket, obtener_dataframe
+from App.Infrastructure.Data.aws import ver_archivos_SB11_en_bucket, obtener_dataframe, obtener_modelo, obtener_modelos_desde_s3
 from time import time
 import pandas as pd
 
@@ -13,9 +13,12 @@ def get_dataframe(name):
 datasets = []
 archivos_en_bucket = ver_archivos_SB11_en_bucket()['Contents']
 
+res = input("Desea descargar los modelos de clasificación desde el s3? 1: Si, otro: No.     ")
+if res == "1":
+    obtener_modelos_desde_s3()
 
 res = input("Desea leer los datasets locales o desde s3? 1: Leer datos locales, 2: Leer datos desde S3.   ")
-#res = "1"
+# res = "1"
 print("su respuesta es: ", res)
 if res == "2":
     print("Leyendo datasets de bucket s3")
@@ -82,6 +85,10 @@ def get_dataframe_for_year(year):
         return dataframe_20211
     else:
         return None
+
+
+def get_classification_model(calendario):
+    return obtener_modelo(calendario)
 
 
 
