@@ -1,4 +1,4 @@
-from App.Infrastructure.Data.aws import ver_archivos_SB11_en_bucket, obtener_dataframe
+from App.Infrastructure.Data.aws import ver_archivos_SB11_en_bucket, obtener_dataframe, obtener_modelo
 from time import time
 import pandas as pd
 
@@ -82,6 +82,10 @@ def get_dataframe_for_year(year):
         return dataframe_20211
     else:
         return None
+
+
+def get_classification_model(calendario):
+    return obtener_modelo(calendario)
 
 
 
