@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, make_response
 
-from App.Domain.Analysis.promedios_y_desviaciones import promedio_nacional, desviacion_nacional, promedio_departamental, \
+from App.Domain.Analisis.promedios_y_desviaciones import promedio_nacional, desviacion_nacional, promedio_departamental, \
     desviacion_departamental, promedio_municipal, desviacion_municipal
 
 promedioGeneralMunicipalDepartamental = Blueprint('promedio_general', __name__)
