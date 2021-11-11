@@ -1,4 +1,4 @@
-from App.Domain.Analysis.utils import mantener_columnas
+from App.Domain.Analisis.utils import mantener_columnas
 from App.Infrastructure.Repository.get_data import get_dataframe_for_year
 
 

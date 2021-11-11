@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, make_response
 
-from App.Domain.Analysis.diagrama_histograma import distribucionDeDatos
+from App.Domain.Analisis.diagrama_histograma import distribucionDeDatos
 
 graficasHistograma = Blueprint('graficas_histograma', __name__)
 
