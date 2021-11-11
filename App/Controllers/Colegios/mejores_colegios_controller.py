@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, make_response
-from App.Domain.Analysis.mejores_colegios import mejores_colegios
+from App.Domain.Analisis.mejores_colegios import mejores_colegios
 
 mejoresColegios = Blueprint('mejores_colegios', __name__)
 
