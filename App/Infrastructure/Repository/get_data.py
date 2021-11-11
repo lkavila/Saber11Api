@@ -13,11 +13,11 @@ def get_dataframe(name):
 datasets = []
 archivos_en_bucket = ver_archivos_SB11_en_bucket()['Contents']
 
-res = input("Desea descargar los modelos de clasificación desde el s3? 1: Si, otro: No.     ")
+res = input("Desea descargar los modelos de clasificación desde el s3? 1: Si, otro: Leer datos locales.     ")
 if res == "1":
     obtener_modelos_desde_s3()
 
-res = input("Desea leer los datasets locales o desde s3? 1: Leer datos locales, 2: Leer datos desde S3.   ")
+res = input("Desea descargar los datasets desde s3? 1: Si, otro: Leer datos locales.   ")
 # res = "1"
 print("su respuesta es: ", res)
 if res == "2":
