@@ -1,5 +1,4 @@
 from flask import Flask
-from App.Infrastructure.Data import run as buscar_nuevos_archivos
 from App.Controllers.Colegios.mejores_colegios_controller import mejoresColegios
 from App.Controllers.General.diagrama_caja_controller import diagramaCaja
 from App.Controllers.General.general_controller import generalData
@@ -14,7 +13,6 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-buscar_nuevos_archivos()
 app.register_blueprint(analisisColegio)
 app.register_blueprint(mejoresColegios)
 app.register_blueprint(diagramaCaja)

@@ -3,20 +3,15 @@ import pandas as pd
 import joblib
 
 bucket_name = 'saber11-datasets'
+prefix_depuardos = 'depurados'
+prefix_no_depuardos = 'no-depurados'
 bucket_model_name = "modelos-saber-11"
 s3_client = boto3.client('s3')
 models_path = "App/Infrastructure/Data/models"
 
-def subir_dataset(path, name):
-    s3_client.upload_file(path+"/"+name, bucket_name, name)
 
-
-def subir_dataset_v2(dataframe, name):
-    dataframe.to_pickle(f"s3://{bucket_name}/{name}")
-
-
-def ver_archivos_SB11_en_bucket():
-    response = s3_client.list_objects_v2(Bucket=bucket_name, MaxKeys=25, Prefix='SB11',)
+def ver_archivos_SB11_en_bucket(prefix):
+    response = s3_client.list_objects_v2(Bucket=bucket_name, MaxKeys=25, Prefix=prefix,)
     return response
 
 
