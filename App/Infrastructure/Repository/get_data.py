@@ -1,94 +1,72 @@
-from App.Infrastructure.Data.aws import ver_archivos_SB11_en_bucket, obtener_dataframe, obtener_modelo, obtener_modelos_desde_s3
+from App.Infrastructure.Data.aws import ver_archivos_SB11_en_bucket, obtener_dataframe, \
+    obtener_modelo, obtener_modelos_desde_s3, prefix_depuardos, prefix_no_depuardos
+from App.Infrastructure.Repository.choose_datasets import ChooseDatasets
 from time import time
 import pandas as pd
+import os
 
 
-def get_dataframe(name):
+def get_dataframe(tipo_dataset, periodo):
     for df in datasets:
-        if df['nombre'] == name:
+        if (df['tipo_dataset'] == tipo_dataset) & (df['periodo'] == str(periodo)):
             return df['dataframe']
     return False
 
 
-datasets = []
-archivos_en_bucket = ver_archivos_SB11_en_bucket()['Contents']
-
-res = input("Desea descargar los modelos de clasificación desde el s3? 1: Si, otro: Leer datos locales.     ")
-if res == "1":
-    obtener_modelos_desde_s3()
-
-res = input("Desea descargar los datasets desde s3? 1: Si, otro: Leer datos locales.   ")
-# res = "1"
-print("su respuesta es: ", res)
-if res == "2":
-    print("Leyendo datasets de bucket s3")
-    start_time = time()
+def get_dataframes_from_s3(prefix):
     try:
+        archivos_en_bucket = ver_archivos_SB11_en_bucket(prefix)['Contents']
         for file in archivos_en_bucket:
-            dataset = {'nombre': file['Key'], 'dataframe': obtener_dataframe(file['Key'])}
+            dataset = {'tipo_dataset': prefix, 'nombre': file['Key'], 'periodo': file['Key'][5:10], 'dataframe': obtener_dataframe(prefix+file['Key'])}
             datasets.append(dataset)
 
     except FileNotFoundError:
         print('File not found!!')
 
-    except Exception:
-        print('Another Error!!')
 
-    dataframe_20171 = get_dataframe("SB11_20171.pkl")
-    dataframe_20172 = get_dataframe("SB11_20172.pkl")
-    dataframe_20181 = get_dataframe("SB11_20181.pkl")
-    dataframe_20182 = get_dataframe("SB11_20182.pkl")
-    dataframe_20191 = get_dataframe("SB11_20191.pkl")
-    dataframe_20192 = get_dataframe("SB11_20192.pkl")
-    dataframe_20201 = get_dataframe("SB11_20201.pkl")
-    dataframe_20202 = get_dataframe("SB11_20202.pkl")
-    dataframe_20211 = get_dataframe("SB11_20211.pkl")
-    print("Tiempo leyendo datasets en bucket s3: %0.10f seconds." % (time() - start_time))
-else:
+def get_dataframes_from_local(path, prefix):
     try:
-        path_data = 'App/Infrastructure/Data/pickle/'
-        dataframe_20171 = pd.read_pickle(path_data + "SB11_20171.pkl")
-        dataframe_20172 = pd.read_pickle(path_data + "SB11_20172.pkl")
-        dataframe_20181 = pd.read_pickle(path_data + "SB11_20181.pkl")
-        dataframe_20182 = pd.read_pickle(path_data + "SB11_20182.pkl")
-        dataframe_20191 = pd.read_pickle(path_data + "SB11_20191.pkl")
-        dataframe_20192 = pd.read_pickle(path_data + "SB11_20192.pkl")
-        dataframe_20201 = pd.read_pickle(path_data + "SB11_20201.pkl")
-        dataframe_20202 = pd.read_pickle(path_data + "SB11_20202.pkl")
-        dataframe_20211 = pd.read_pickle(path_data + "SB11_20211.pkl")
+        for file in os.listdir(path):
+            if file[:5] == 'SB11_':
+                dataset = {'tipo_dataset': prefix, 'nombre': file, 'periodo': file[5:10], 'dataframe': pd.read_pickle(path+'/'+file)}
+                datasets.append(dataset)
 
     except FileNotFoundError:
         print('File not found!!')
 
-    except Exception:
-        print('Another Error!!')
-
 
 def get_dataframe_for_year(year):
-    if year == 20171:
-        return dataframe_20171
-    elif year == 20172:
-        return dataframe_20172
-    elif year == 20181:
-        return dataframe_20181
-    elif year == 20182:
-        return dataframe_20182
-    elif year == 20191:
-        return dataframe_20191
-    elif year == 20192:
-        return dataframe_20192
-    elif year == 20201:
-        return dataframe_20201
-    elif year == 20202:
-        return  dataframe_20202
-    elif year == 20211:
-        return dataframe_20211
+    if tipos_datasets.es_tipo_depurado():
+        return get_dataframe(prefix_depuardos, year)
     else:
-        return None
+        return get_dataframe(prefix_no_depuardos, year)
+
+
+def change_datasets_type(es_depurados):
+    tipos_datasets.cambiar_datasets(es_depurados)
+    return f'Tipo de datasets cambiado correctamente; usar datasets depurados: {es_depurados} '
 
 
 def get_classification_model(calendario):
     return obtener_modelo(calendario)
 
 
+datasets = []
+tipos_datasets = ChooseDatasets()
 
+res = input("Desea descargar los modelos de clasificación desde el s3? 1: Si, otro: Leer datos locales:     ")
+if res == "1":
+    obtener_modelos_desde_s3()
+
+res = input("Desea leer los datasets desde s3 (tomará alrededor de 4 minutos)? 1: Si, otro: Leer datos locales:   ")
+if res == "1":
+    print("Leyendo datasets de bucket s3")
+    start_time = time()
+    get_dataframes_from_s3(prefix_depuardos)
+    get_dataframes_from_s3(prefix_no_depuardos)
+    print("Tiempo leyendo datasets en bucket s3: %0.10f seconds." % (time() - start_time))
+else:
+    path_data = 'App/Infrastructure/Data/pickle/' + prefix_no_depuardos
+    get_dataframes_from_local(path_data, prefix_no_depuardos)
+    path_data = 'App/Infrastructure/Data/pickle/' + prefix_depuardos
+    get_dataframes_from_local(path_data, prefix_depuardos)
