@@ -1,24 +1,28 @@
-###Link repositorio frontend
+##Link repositorio frontend
 
 https://github.com/oemanuel/Saber11Front
 
-####Los archivos necesarios para que la app funcione se encuentran en:
+##Los archivos necesarios para que la app funcione se encuentran en:
 
-https://github.com/lkavila/pickles_backend_files
+* Datos no depurados: https://github.com/lkavila/pickle_backend_files
+* Datos depurados: https://github.com/lkavila/pickle_files
 
-En ese repositorio se pueden encontrar los resultados de las pruebas saber 11 de los ultimos años,
-estos datos se deben pasar a xlsm y mandarlos a la carpeta App/Infrastructure/Data/xlsm del proyecto 
-comandos: 
+En estos repositorio se pueden encontrar los resultados de las pruebas saber 11 en formato .pkl de los ultimos 4 años,
+Estos archivos se deben descargar, y en el caso de los pickle no depurados deben mandarse a la carpeta 
+App/Infrastructure/Data/pickle/no-depurados del proyecto, y en el caso de los depurados a la carpeta
+App/Infrastructure/Data/pickle/depurados.
+
+En caso de no querer descargas los archivos, tambien está la opción de leerlos desde un bucket s3, para esto
+necesita unas credenciales de acceso, si las quiere puede pedirmelas escribiendo a mi correo kener1999avila@gmail.com
 
 ###Pasos para correr el proyecto
 * Clone el repositorio
 * Cree un entorno virtual de python y activelo
-* instale las librerías con el comando pip install -r requirements
-* Agregar los archivos pkl a la ruta mencionada
-* Agregar variables de entorno de aws, se puede hacer mediante el archivo credentials dentro de una carpeta llamada .aws en la raiz del proyecto.
-Sin embargo recomendamos añadir las credenciales usando la libreria awscli. Acontinuación damos credenciales de prueba de acceso de solo lectura para el bucket s3
+* Instale las librerías con el comando pip install -r requirements
+* Agregar los archivos pkl a las rutas mencionadas (En caso de descargarlos, es lo recomendable si quieres hacer pruebas)
+* Ejecute la aplicación con el comando py app.py
 
-    * Access Key ID: AKIA2XZHLMYWM77LVYHV
-    * Secret Access ID: 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
-    * region: us-east-2
+###EndPoints
 
+Los endpoints de la api se pueden encontrar aquí:
+https://docs.google.com/spreadsheets/d/14tT9O8M_XcTPNCeXN8tSwfZMeVXYXGQTjDyRqd_XGXA/edit?usp=sharing
