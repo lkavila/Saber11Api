@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, make_response
 
-from App.Domain.Analysis.grafico_de_lineas import promedio_gen, variable_economica, desviacion_economica, \
+from App.Domain.Analisis.grafico_de_lineas import promedio_gen, variable_economica, desviacion_economica, \
     promediocolegio, promedioDepto, promediomunicipio
 
 graficasLineas = Blueprint('graficas_lineas', __name__)

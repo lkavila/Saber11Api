@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, make_response
-from App.Domain.Analysis.diagrama_caja import diagrama_caja
+from App.Domain.Analisis.diagrama_caja import diagrama_caja
 
 diagramaCaja = Blueprint('diagrama_caja', __name__)
 
