@@ -10,10 +10,11 @@ def home():
     print(data)
     result = {
         f"mejoresColegios": mejores_colegios(int(data.get('periodo','')),
-                                             data.get('departamento'),
-                                             data.get('municipio'),
-                                             ['PUNT_GLOBAL'],
+                                             data.get('puntaje'),
                                              int(data.get('top','')),
-                                             int(data.get('num_estudiantes','')))
+                                             int(data.get('num_estudiantes','')),
+                                             data.get('departamento'),
+                                             data.get('municipio')
+                                             )
         }
     return make_response(jsonify(result), 200)
