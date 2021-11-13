@@ -19,7 +19,7 @@ necesita unas credenciales de acceso, si las quiere puede pedirmelas escribiendo
 * Clone el repositorio
 * Cree un entorno virtual de python y activelo
 * Instale las librerías con el comando pip install -r requirements
-* Por conflictos de dependencias, se debe instalar boto3 aparte, ejecutando pip install boto3.
+* Por conflictos de dependencias, se debe instalar boto3 y aiobotocore aparte, ejecutando pip install boto3 aiobotocore.
 * (Opcional) Instalar awscli si se van a leer datos desde s3, pip install awscli. (Se necesitan credenciales)
 * Agregar los archivos pkl a las rutas mencionadas (En caso de descargarlos, es lo recomendable si quieres hacer pruebas)
 * Ejecute la aplicación con el comando py app.py
