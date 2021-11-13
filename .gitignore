@@ -14,10 +14,10 @@ __pycache__/
 
 # Data
 App/Infrastructure/Data/pickle/*
-App/Infrastructure/Data/xlsm/*
 !App/Infrastructure/Data/models/.gitkeep
 !App/Infrastructure/Data/pickle/.gitkeep
-!App/Infrastructure/Data/xlsm/.gitkeep
+!App/Infrastructure/Data/pickle/depurados/.gitkeep
+!App/Infrastructure/Data/pickle/no-depurados/.gitkeep
 
 # Distribution / packaging
 .Python

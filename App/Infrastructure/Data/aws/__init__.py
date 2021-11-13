@@ -3,15 +3,15 @@ import pandas as pd
 import joblib
 
 bucket_name = 'saber11-datasets'
-prefix_depuardos = 'depurados'
-prefix_no_depuardos = 'no-depurados'
+prefix_depurados = 'depurados'
+prefix_no_depurados = 'no-depurados'
 bucket_model_name = "modelos-saber-11"
 s3_client = boto3.client('s3')
 models_path = "App/Infrastructure/Data/models"
 
 
 def ver_archivos_SB11_en_bucket(prefix):
-    response = s3_client.list_objects_v2(Bucket=bucket_name, MaxKeys=25, Prefix=prefix,)
+    response = s3_client.list_objects_v2(Bucket=bucket_name, MaxKeys=25, Prefix=prefix+'/SB11',)
     return response
 
 
