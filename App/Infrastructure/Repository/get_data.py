@@ -17,11 +17,7 @@ def get_dataframes_from_s3(prefix):
     try:
         archivos_en_bucket = ver_archivos_SB11_en_bucket(prefix)['Contents']
         long = len(prefix)
-        print(archivos_en_bucket)
         for file in archivos_en_bucket:
-            print(file)
-            print(file['Key'])
-            print(file['Key'][long+6:long+6+5])
             dataset = {'tipo_dataset': prefix, 'periodo': file['Key'][long+6:long+6+5], 'dataframe': obtener_dataframe(file['Key'])}
             datasets.append(dataset)
 
