@@ -3,6 +3,7 @@ from App.Domain.Analisis.utils import mantener_columnas, periodos, puntajes, des
 import numpy
 from scipy.stats import norm
 
+
 def obtener_departamentos_y_municipios_colegios(periodo):
     dataframe = get_dataframe_for_year(periodo)
     columnas_mantener = ['COLE_DEPTO_UBICACION', 'COLE_MCPIO_UBICACION']
@@ -35,29 +36,40 @@ def total_registros_niveles_desempeno_por_periodo(periodo, departamento=None, mu
         dataframe = dataframe[dataframe['COLE_MCPIO_UBICACION'] == municipio.upper()]
     if colegio is not None:
         dataframe = dataframe[dataframe['COLE_NOMBRE_ESTABLECIMIENTO'] == colegio.upper()]
+
     total_estudiantes = dataframe.shape[0]
     resultado = {}
-    datos_periodo = {'Total_estudiantes': total_estudiantes}
+    datos_periodo = {'Total_estudiantes': total_estudiantes, 'Promedios': [], 'Desempenos': []}
+    if total_estudiantes == 0:
+        return "NO HAY DATOS"
 
     for puntaje in puntajes:
-        datos_periodo['Promedio '+puntaje] = round(numpy.mean(dataframe[puntaje].values), 2)
+        datos_periodo['Promedios'].append({puntaje: round(numpy.mean(dataframe[puntaje].values), 2)})
 
     for desempeno in desempenos:
-        datos_periodo['Porcentaje '+desempeno] = dataframe[desempeno].value_counts()\
-            .apply(lambda x: round((x/total_estudiantes)*100), 1).to_dict()
+        datos_periodo['Desempenos'].append({desempeno: dataframe[desempeno].value_counts() \
+                                           .apply(lambda x: round((x / total_estudiantes) * 100), 1).to_dict()})
 
-    resultado[f'Periodo {periodo}'] = datos_periodo
+    dataframe['DESEMP_GLOBAL'] = dataframe[['DESEMP_INGLES', 'DESEMP_SOCIALES_CIUDADANAS',
+                                            'DESEMP_C_NATURALES', 'DESEMP_MATEMATICAS',
+                                            'DESEMP_LECTURA_CRITICA']].mean(axis=1)
+    dataframe['DESEMP_GLOBAL'] = dataframe['DESEMP_GLOBAL'].apply(lambda x: round(x))
 
+    print(dataframe['DESEMP_GLOBAL'].value_counts())
+    datos_periodo['Desempenos'].append({'DESEMP_GLOBAL': dataframe['DESEMP_GLOBAL'].value_counts() \
+                                       .apply(lambda x: round((x / total_estudiantes) * 100), 1).to_dict()})
+
+    resultado[periodo] = datos_periodo
     return resultado
 
 
-def total_registros_niveles_desempeno_por_calendario(calendario):
-    resultado = []
+def total_registros_niveles_desempeno_por_calendario(calendario, departamento=None, municipio=None, colegio=None):
+    resultado = {'periodos': []}
     for periodo in periodos:
         if (calendario == "A") & (periodo % 2 == 0):
-            resultado.append(total_registros_niveles_desempeno_por_periodo(periodo))
+            resultado['periodos'].append(total_registros_niveles_desempeno_por_periodo(periodo, departamento, municipio, colegio))
         if (calendario == "B") & (periodo % 2 != 0):
-            resultado.append(total_registros_niveles_desempeno_por_periodo(periodo))
+            resultado['periodos'].append(total_registros_niveles_desempeno_por_periodo(periodo, departamento, municipio, colegio))
     return resultado
 
 
@@ -83,7 +95,7 @@ def probabilidad_puntaje(periodo, puntaje, limite_inf, limite_sup, departamento=
 
     cdf_upper_limit = norm(loc=promedio, scale=desviacion_estandar).cdf(limite_sup)
     cdf_lower_limit = norm(loc=promedio, scale=desviacion_estandar).cdf(limite_inf)
-    probabilidad = (round(cdf_upper_limit - cdf_lower_limit, 3))*100
+    probabilidad = (round(cdf_upper_limit - cdf_lower_limit, 3)) * 100
     resultado = f'La probabilidad de que un estudiante obtenga un puntaje en el rango {limite_inf}-{limite_sup} ' \
                 f'con las condiciones dadas es: {probabilidad}%'
 

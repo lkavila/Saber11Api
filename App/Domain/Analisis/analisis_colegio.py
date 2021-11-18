@@ -6,5 +6,5 @@ def registros_colegio(periodo, departamento, municipio, colegio,  inicio):
     dataframe = dataframe[dataframe['COLE_DEPTO_UBICACION'] == departamento.upper()]
     dataframe = dataframe[dataframe['COLE_MCPIO_UBICACION'] == municipio.upper()]
     dataframe = dataframe[dataframe['COLE_NOMBRE_ESTABLECIMIENTO'] == colegio.upper()]
-    return dataframe[inicio:20].to_dict()
+    return dataframe[inicio:(inicio+20)].to_dict()
 
