@@ -55,7 +55,6 @@ def total_registros_niveles_desempeno_por_periodo(periodo, departamento=None, mu
                                             'DESEMP_LECTURA_CRITICA']].mean(axis=1)
     dataframe['DESEMP_GLOBAL'] = dataframe['DESEMP_GLOBAL'].apply(lambda x: round(x))
 
-    print(dataframe['DESEMP_GLOBAL'].value_counts())
     datos_periodo['Desempenos'].append({'DESEMP_GLOBAL': dataframe['DESEMP_GLOBAL'].value_counts() \
                                        .apply(lambda x: round((x / total_estudiantes) * 100), 1).to_dict()})
 
