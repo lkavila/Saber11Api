@@ -8,6 +8,7 @@ from App.Controllers.General.grafica_histograma_controller import graficasHistog
 from App.Controllers.General.promedio_general_contoller import promedioGeneralMunicipalDepartamental
 from App.Controllers.General.predecir_clasificacion_controller import predecirClasificacion
 from App.Controllers.Colegios.analisis_colegios_controller import analisisColegio
+from App.Controllers.General.numero_estudiantes_puntajes_controller import numeroDeEsrudiantesPorRangoPuntaje
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -22,6 +23,7 @@ app.register_blueprint(graficasLineas)
 app.register_blueprint(graficasHistograma)
 app.register_blueprint(promedioGeneralMunicipalDepartamental)
 app.register_blueprint(predecirClasificacion)
+app.register_blueprint(numeroDeEsrudiantesPorRangoPuntaje)
 
 if __name__ == '__main__':
     app.run()
