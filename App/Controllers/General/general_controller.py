@@ -17,7 +17,11 @@ def obtener_departamentos_y_municipios():
 @generalData.route('/datos-generales/promedios-desempenos')
 def obtener_promedios_y_desempenos():
     data = request.args
-    result = total_registros_niveles_desempeno_por_calendario((data.get('calendario','')))
+    print(data)
+    result = total_registros_niveles_desempeno_por_calendario(data.get('calendario'),
+                                                              data.get('departamento'),
+                                                              data.get('municipio'),
+                                                              data.get('colegio'))
     return make_response(jsonify(result), 200)
 
 
